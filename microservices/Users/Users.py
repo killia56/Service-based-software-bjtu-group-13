@@ -27,4 +27,5 @@ def user_bookings(username):
 		return("The Bookings service is unavailable.")
 
 if __name__ == '__main__':
-	app.run(host='localhost', port=5001, debug=True)
+	app.run(host='0.0.0.0', port=5001, debug=True)
+	
