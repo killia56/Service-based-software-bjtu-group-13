@@ -1,7 +1,7 @@
 import flask as fl
 import sqlite3
 import requests
-conn = sqlite3.connect('Tiket.db')
+conn = sqlite3.connect('Ticket.db')
 c = conn.cursor()
 
 app = fl.Flask(__name__)
