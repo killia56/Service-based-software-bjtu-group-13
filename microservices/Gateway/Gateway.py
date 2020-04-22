@@ -10,4 +10,7 @@ def index():
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5004, debug=True)
+	# url = 'http://localhost:5001/login'
+	# myobj = {'somekey': 'somevalue'}
+	# print(requests.get(url, data = myobj))
+	app.run(host='0.0.0.0', port=5004, debug=True)signin
