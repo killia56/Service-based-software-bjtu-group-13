@@ -7,7 +7,7 @@ app = fl.Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def index():
-	return ""
+	return "P"
 
 
 if __name__ == '__main__':

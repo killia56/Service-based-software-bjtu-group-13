@@ -7,7 +7,7 @@ app = fl.Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def index():
-	return ""
+	return "U"
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
