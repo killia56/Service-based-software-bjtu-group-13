@@ -36,7 +36,7 @@ def allTickets():
 def index():
 	return "P"
 
-@app.route('/createTicket/<username>/<movie>', methods=['GET', 'POST'])
+@app.route('/createTicket/', methods=['GET', 'POST'])
 def creationTicket(username, movie):
 	if fl.request.method == 'POST':
 		if not fl.request.form:
@@ -52,7 +52,7 @@ def creationTicket(username, movie):
 			else:
 				return "KO"
 
-@app.route('/confirmation/<username>/<movie>')
+@app.route('/confirmation/')
 def confirmed(username, movie):
 	if fl.request.method == "POST":
 		if not fl.request.form:
