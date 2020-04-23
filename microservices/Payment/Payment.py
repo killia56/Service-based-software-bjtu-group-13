@@ -1,6 +1,8 @@
 import flask as fl
 import sqlite3
 import requests
+from flask import jsonify
+
 conn = sqlite3.connect('ticket.db')
 c = conn.cursor()
 
@@ -36,8 +38,16 @@ def allTickets():
 def index():
 	return {'message' : 'welcome in Payment microservice'}, 200
 
+@app.route("/PaymentList", methods=['GET'])
+def return_list():
+	paylist = []
+	for row in allTickets():
+		paylist.append(row)
+	print(paylist)
+	return jsonify(paylist), 200
+
 @app.route('/createTicket/', methods=['GET', 'POST'])
-def creationTicket(username, movie):
+def creationTicket():
 	if fl.request.method == 'POST':
 		if not fl.request.form:
 			return {'message' : 'body is empty'}, 400
@@ -55,7 +65,7 @@ def creationTicket(username, movie):
 		return {'message' : 'login require POST data'}, 405
 
 @app.route('/confirmation/')
-def confirmed(username, movie):
+def confirmed():
 	if fl.request.method == "POST":
 		if not fl.request.form:
 			return {'message' : 'body is empty'}, 400
