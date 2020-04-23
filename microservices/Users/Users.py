@@ -48,7 +48,7 @@ def signin():
 		else:
 			password = str(fl.request.form['password'])
 			username = str(fl.request.form['username'])
-			if not password or username:
+			if not (password and username) :
 				return {'message' : 'body require username and password'}, 400
 			print(password)
 			print(username)
