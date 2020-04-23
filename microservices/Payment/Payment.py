@@ -38,16 +38,32 @@ def index():
 
 @app.route('/createTicket/<username>/<movie>', methods=['GET', 'POST'])
 def creationTicket(username, movie):
-	if searchTicket((username, movie,)) == False:
-		createTicket((username, movie,))
-		return "OK"
-	else:
-		return "KO"
+	if fl.request.method == 'POST':
+		if not fl.request.form:
+			return "False"
+		else:
+			username = str(fl.request.form['username'])
+			movie = str(fl.request.form['movie'])
+			if not username or movie:
+				return "False"
+			if searchTicket((username, movie,)) == False:
+				createTicket((username, movie,))
+				return "OK"
+			else:
+				return "KO"
 
 @app.route('/confirmation/<username>/<movie>')
 def confirmed(username, movie):
-	ticketPaid((username, movie,))
-	return "Done"
+	if fl.request.method == "POST":
+		if not fl.request.form:
+			return "False"
+		else:
+			username = str(fl.request.form['username'])
+			movie = str(fl.request.form['movie'])
+			if not username or movie:
+				return "False"
+				ticketPaid((username, movie,))
+				return "Done"
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5003, debug=True)

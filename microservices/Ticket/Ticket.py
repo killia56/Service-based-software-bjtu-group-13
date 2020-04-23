@@ -38,20 +38,34 @@ def index():
 
 	return "T"
 
-@app.route('/createMovie/<movieName>/<seatnb>/<soldnb>', methods=['GET', 'POST'])
+@app.route('/createMovie/', methods=['GET', 'POST'])
 def movieCreation(movieName, seatnb, soldnb):
-	if searchMovie((movieName,)) == False:
-		createMovie((movieName, seatnb, soldnb))
-	rep = str(fl.request.data)
-	return "True"
+	if fl.request.method == 'POST':
+		if not fl.request.form:
+			return "False"
+		else:
+			movieName = str(fl.request.form['movieName'])
+			seatnb = str(fl.request.form['seatnb'])
+			soldnb = str(fl.request.form['soldnb'])
+			if not movieName or seatnb or soldnb:
+				return "False"
+			if searchMovie((movieName,)) == False:
+				createMovie((movieName, seatnb, soldnb))
+				return "True"
 
-@app.route('/buySeat/<movie>', methods=['GET', 'POST'])
+@app.route('/buySeat/', methods=['GET', 'POST'])
 def seat(movie):
-	rep = str(fl.request.data)
-	if buySeat((movie,)) == True:
-		return "OK"
-	else :
-		return "KO"
+	if fl.request.method == 'POST':
+		if not fl.request.form:
+			return "False"
+		else:
+			movie = str(fl.request.form['movie'])
+			if not movie:
+				return "False"
+			if buySeat((movie,)) == True:
+				return "OK"
+			else :
+				return "KO"
 
 
 if __name__ == '__main__':
