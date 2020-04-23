@@ -1,5 +1,5 @@
 import sqlite3
-conn = sqlite3.connect('movie.db')
+conn = sqlite3.connect('Ticket.db')
 c = conn.cursor()
 
 
