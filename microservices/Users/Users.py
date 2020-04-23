@@ -1,6 +1,7 @@
 import flask as fl
 import sqlite3
 import requests
+from flask import jsonify
 app = fl.Flask(__name__)
 
 def createUser(t):
@@ -21,9 +22,23 @@ def searchUser(t):
 	c.execute('SELECT * FROM users WHERE login=?', t)
 	return c.fetchone()!=None
 
+def listUser():
+	conn = sqlite3.connect('Users.db')
+	c = conn.cursor()
+	return c.execute('SELECT login FROM users')
+
+
 @app.route("/", methods=['GET'])
 def index():
 	return {'message' : 'welcome in Users microservice'}, 200
+
+@app.route("/UsersList", methods=['GET'])
+def return_list():
+	userlist = []
+	for row in listUser():
+		userlist.append(row)
+	print(userlist)
+	return jsonify(userlist), 200
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
