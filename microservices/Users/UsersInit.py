@@ -22,9 +22,8 @@ def searchUser(t):
 
 
 createTabUser()
-print(loginUser(('user1', 'password1',)))
 createUser(('user1', 'password1',))
-print(loginUser(('user1', 'password1',)))
-print(searchUser(('user1',)))
+createUser(('user2', 'password2',))
+createUser(('user3', 'password3',))
 
 conn.close()

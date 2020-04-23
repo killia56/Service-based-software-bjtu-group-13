@@ -1,5 +1,5 @@
 import sqlite3
-conn = sqlite3.connect('ticket.db')
+conn = sqlite3.connect('Payment.db')
 c = conn.cursor()
 
 
@@ -28,11 +28,8 @@ def allTickets():
 
 
 createTabTicket()
-print(searchTicket(('user1', 'movie1',)))
 createTicket(('user1', 'movie1',))
-print(searchTicket(('user1', 'movie1',)))
-print(ticketPaid(('user1', 'movie1',)))
-for row in allTickets():
-    print(row)
+createTicket(('user1', 'movie2',))
+createTicket(('user1', 'movie3',))
 
 conn.close()

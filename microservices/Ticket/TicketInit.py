@@ -29,12 +29,8 @@ def buySeat(t):
 
 
 createTabMovies()
-print(searchMovie(('movie1',)))
 createMovie(('movie1', 100, 0,))
 createMovie(('movie2', 50, 0,))
-print(buySeat(('movie1',)))
-print(searchMovie(('movie1',)))
-for row in allMovies():
-    print(row)
+createMovie(('movie3', 200, 0,))
 
 conn.close()
