@@ -3,19 +3,19 @@ import sqlite3
 import requests
 from flask import jsonify
 
-conn = sqlite3.connect('ticket.db')
+conn = sqlite3.connect('Payment.db')
 c = conn.cursor()
 
 app = fl.Flask(__name__)
 
 def createTicket(t):
-	conn = sqlite3.connect('ticket.db')
+	conn = sqlite3.connect('Payment.db')
 	c = conn.cursor()
 	c.execute("INSERT INTO tickets VALUES (?,?,0)", t)
 	conn.commit()
 
 def ticketPaid(t):
-	conn = sqlite3.connect('ticket.db')
+	conn = sqlite3.connect('Payment.db')
 	c = conn.cursor()
 	c.execute('SELECT * FROM tickets WHERE user = ? AND movie=?', t)
 	tmp = c.fetchone()
@@ -24,13 +24,13 @@ def ticketPaid(t):
 	return tmp[2]==0
 
 def searchTicket(t):
-	conn = sqlite3.connect('ticket.db')
+	conn = sqlite3.connect('Payment.db')
 	c = conn.cursor()
 	c.execute('SELECT * FROM tickets WHERE user = ? AND movie=?', t)
 	return c.fetchone()!=None
 
 def allTickets():
-	conn = sqlite3.connect('ticket.db')
+	conn = sqlite3.connect('Payment.db')
 	c = conn.cursor()
 	return c.execute('SELECT * FROM tickets')
 
@@ -46,7 +46,7 @@ def return_list():
 	print(paylist)
 	return jsonify(paylist), 200
 
-@app.route('/createTicket/', methods=['GET', 'POST'])
+@app.route('/createTicket', methods=['GET', 'POST'])
 def creationTicket():
 	if fl.request.method == 'POST':
 		if not fl.request.form:
@@ -54,7 +54,9 @@ def creationTicket():
 		else:
 			username = str(fl.request.form['username'])
 			movie = str(fl.request.form['movie'])
-			if not username or movie:
+			print(username)
+			print(movie)
+			if not (username and movie):
 				return {'message' : 'body require username and movie'}, 400
 			if searchTicket((username, movie,)) == False:
 				createTicket((username, movie,))
@@ -64,7 +66,7 @@ def creationTicket():
 	else:
 		return {'message' : 'login require POST data'}, 405
 
-@app.route('/confirmation/')
+@app.route('/confirmation')
 def confirmed():
 	if fl.request.method == "POST":
 		if not fl.request.form:
