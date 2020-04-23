@@ -48,11 +48,10 @@ def movieCreation(movieName, seatnb, soldnb):
 @app.route('/buySeat/<movie>', methods=['GET', 'POST'])
 def seat(movie):
 	rep = str(fl.request.data)
-	return buySeat((movie,))
-	
-	#res = buySeat((movie,))
-	#print(res)
-	#return "OK"
+	if buySeat((movie,)) == True:
+		return "OK"
+	else :
+		return "KO"
 
 
 if __name__ == '__main__':
