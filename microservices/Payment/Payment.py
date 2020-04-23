@@ -74,7 +74,7 @@ def confirmed():
 		else:
 			username = str(fl.request.form['username'])
 			movie = str(fl.request.form['movie'])
-			if not username or movie:
+			if not (username and movie):
 				return {'message' : 'body require username and movie'}, 400
 				ticketPaid((username, movie,))
 				return {'message' : 'ticket buy'}, 200
