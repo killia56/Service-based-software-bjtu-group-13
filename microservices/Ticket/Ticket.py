@@ -35,37 +35,40 @@ def buySeat(t):
 
 @app.route("/", methods=['GET'])
 def index():
-
-	return "T"
+	return {'message' : 'welcome in Ticket microservice'}, 200
 
 @app.route('/createMovie/', methods=['GET', 'POST'])
 def movieCreation(movieName, seatnb, soldnb):
 	if fl.request.method == 'POST':
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			movieName = str(fl.request.form['movieName'])
 			seatnb = str(fl.request.form['seatnb'])
 			soldnb = str(fl.request.form['soldnb'])
 			if not movieName or seatnb or soldnb:
-				return "False"
+				return {'message' : 'body require movieName, seatnb and soldnb'}, 400
 			if searchMovie((movieName,)) == False:
 				createMovie((movieName, seatnb, soldnb))
-				return "True"
+				return {'message' : 'movie created'}, 200
+	else:
+		return {'message' : 'login require POST data'}, 405
 
 @app.route('/buySeat/', methods=['GET', 'POST'])
 def seat(movie):
 	if fl.request.method == 'POST':
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			movie = str(fl.request.form['movie'])
 			if not movie:
-				return "False"
+				return {'message' : 'body require movie'}, 400
 			if buySeat((movie,)) == True:
-				return "OK"
+				return {'message' : 'Seat is sold'}, 200
 			else :
-				return "KO"
+				return {'message' : 'Error with solding ticket'}, 400
+	else:
+		return {'message' : 'login require POST data'}, 405
 
 
 if __name__ == '__main__':

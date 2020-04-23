@@ -23,39 +23,43 @@ def searchUser(t):
 
 @app.route("/", methods=['GET'])
 def index():
-	return "U"
+	return {'message' : 'welcome in Users microservice'}, 200
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
 	if fl.request.method == 'POST':
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			password = str(fl.request.form['password'])
 			username = str(fl.request.form['username'])
 			if not password or username:
-				return "False"
+				return {'message' : 'body require username and password'}, 400
 			print(password)
 			print(username)
 			if searchUser((username,)) == False:
 				createUser((username, password,))
-			return "True"
+			return {'message' : 'user created'}, 200
+	else:
+		return {'message' : 'signin require POST data'},405
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if fl.request.method == 'POST':
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			password = str(fl.request.form['password'])
 			username = str(fl.request.form['username'])
 			if not password or username:
-				return "False"
+				return {'message' : 'body require username and password'}, 400
 			print(password)
 			print(username)
 			res = loginUser((username, password,))
 			print(res)
-			return "OK"
+			return {'message' : 'login successfull'}, 200
+	else:
+		return {'message' : 'login require POST data'}, 405
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5001, debug=True)

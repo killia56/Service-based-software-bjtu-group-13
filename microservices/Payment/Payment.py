@@ -34,36 +34,40 @@ def allTickets():
 
 @app.route("/", methods=['GET'])
 def index():
-	return "P"
+	return {'message' : 'welcome in Payment microservice'}, 200
 
 @app.route('/createTicket/', methods=['GET', 'POST'])
 def creationTicket(username, movie):
 	if fl.request.method == 'POST':
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			username = str(fl.request.form['username'])
 			movie = str(fl.request.form['movie'])
 			if not username or movie:
-				return "False"
+				return {'message' : 'body require username and movie'}, 400
 			if searchTicket((username, movie,)) == False:
 				createTicket((username, movie,))
-				return "OK"
+				return {'message' : 'ticket created'}, 200
 			else:
-				return "KO"
+				return {'message' : 'Error with ticket'}, 400
+	else:
+		return {'message' : 'login require POST data'}, 405
 
 @app.route('/confirmation/')
 def confirmed(username, movie):
 	if fl.request.method == "POST":
 		if not fl.request.form:
-			return "False"
+			return {'message' : 'body is empty'}, 400
 		else:
 			username = str(fl.request.form['username'])
 			movie = str(fl.request.form['movie'])
 			if not username or movie:
-				return "False"
+				return {'message' : 'body require username and movie'}, 400
 				ticketPaid((username, movie,))
-				return "Done"
+				return {'message' : 'ticket buy'}, 200
+	else:
+		return {'message' : 'login require POST data'}, 405
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5003, debug=True)
