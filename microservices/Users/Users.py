@@ -25,19 +25,37 @@ def searchUser(t):
 def index():
 	return "U"
 
-@app.route('/signin/<username>/<password>', methods=['GET', 'POST'])
-def signin(username, password):
-	if searchUser((username,)) == False:
-		createUser((username, password,))
-	rep = str(fl.request.data)
-	return "True"
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+	if fl.request.method == 'POST':
+		if not fl.request.form:
+			return "False"
+		else:
+			password = str(fl.request.form['password'])
+			username = str(fl.request.form['username'])
+			if not password or username:
+				return "False"
+			print(password)
+			print(username)
+			if searchUser((username,)) == False:
+				createUser((username, password,))
+			return "True"
 
-@app.route('/login/<username>/<password>', methods=['GET', 'POST'])
-def login(username, password):
-	rep = str(fl.request.data)
-	res = loginUser((username, password,))
-	print(res)
-	return "OK"
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	if fl.request.method == 'POST':
+		if not fl.request.form:
+			return "False"
+		else:
+			password = str(fl.request.form['password'])
+			username = str(fl.request.form['username'])
+			if not password or username:
+				return "False"
+			print(password)
+			print(username)
+			res = loginUser((username, password,))
+			print(res)
+			return "OK"
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=5001, debug=True)
